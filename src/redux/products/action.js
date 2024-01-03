@@ -1,0 +1,27 @@
+import{
+    ADD_PRODUCT,
+    ADD_QUANTITY,
+    REMOVE_QUANTITY,
+    FILTER_BY_CATEGORY,
+} from "./actionType"
+
+export const addProduct = (product) => {
+    return{
+        type: ADD_QUANTITY,
+        payload: {productId, quantity },
+    };
+};
+
+export const removeQuantity = (productId) => {
+    return{
+        type: REMOVE_QUANTITY,
+        payload:productId
+    }
+}
+
+export const filterByCategory = (productId) => {
+    return{
+        type :FILTER_BY_CATEGORY ,
+        payload: { filter },
+    }
+}
