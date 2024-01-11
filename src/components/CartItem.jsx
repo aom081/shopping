@@ -1,15 +1,30 @@
 import React from 'react'
 import { IoIosClose } from "react-icons/io";
 import { removeFromCart, increaseQuantity, decreaseQuantity } from '../redux/cart/action';
-import { addQuantity, removeQuantity  } from '../redux/products/action';
+import { addQuantity, removeQuantity } from '../redux/products/action';
 import { useDispatch } from 'react-redux';
 
 const CartItem = ({ product }) => {
     const { id, name, imageURL, category, price, quantity, productId } = product;
-    const dispatch =useDispatch();
+    const dispatch = useDispatch();
+    //ลบของในตะกร้า เพิ่มของหน้าหลัก
     const handleRemoveFromCart = () => {
         dispatch(removeFromCart(id));
         dispatch(addQuantity(productId, quantity));
+    }
+    //ถ้าของในตะกร้าเหลือ 0 เรียกลบของ
+    if (quantity === 0) {
+        handleRemoveFromCart();
+    }
+    //เพิ่มจำนวนของในตะหร้า หน้าหลักจำนวนของลด
+    const handleIncreaseQuantity = () => {
+        dispatch(increaseQuantity(id));
+        dispatch(removeQuantity(productId));
+    }
+    //ลดจำนวนของในตะกร้า หน้าหลักจำนวนของเพิ่ม
+    const handleDecreaseQuantity = () => {
+        dispatch(decreaseQuantity(id));
+        dispatch(addQuantity(productId, 1));
     }
     return (
         <div>
@@ -31,7 +46,8 @@ const CartItem = ({ product }) => {
                     </div>
                     <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                         <div className="flex items-center border-gray-100">
-                            <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3 5 duration-100 hover:bg-blue-500 hover:text-blue-500">
+                            <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3 5 duration-100 hover:bg-blue-500 hover:text-blue-500"
+                                onClick={handleDecreaseQuantity}>
                                 {" "}
                                 -{" "}
                             </span>
@@ -39,15 +55,16 @@ const CartItem = ({ product }) => {
                                 type="number"
                                 min="1"
                                 className="number h-8 w-8 border bg-white text-center text-xs outline-none" />
-                            <span className='cursor-pointer rounded-1 bg-gray-100 py-1 px-3 5 duration-100 hover:bg-blue-500 hover:text-blue-500'>
+                            <span className='cursor-pointer rounded-1 bg-gray-100 py-1 px-3 5 duration-100 hover:bg-blue-500 hover:text-blue-500'
+                                onClick={handleIncreaseQuantity}>
                                 {" "}
                                 +{" "}
                             </span>
                         </div>
                         <div className='flex-items-center space-x-4'>
                             <p className='text-sm'>{price * quantity} ฿</p>
-                            <button className='lws-removeFromCart' 
-                            onClick={handleRemoveFromCart}> <IoIosClose /> </button>
+                            <button className='lws-removeFromCart'
+                                onClick={handleRemoveFromCart}> <IoIosClose /> </button>
                         </div>
                     </div>
                 </div>

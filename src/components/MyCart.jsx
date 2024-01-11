@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import CartItem from './CartItem';
+import Bill from './Bill';
 
 const MyCart =() => {
   const carts = useSelector((state) => state.cart)
@@ -16,8 +17,7 @@ const MyCart =() => {
                   carts.map((product) => (<CartItem product={product} key={product.id} />)
                   )) : (
                     <div> No product in your cart</div>
-                      )
-              }
+                      )}
             </div>
           </div>
       
