@@ -1,11 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const NavBar = () => {
     //subscribe to carts in store
     const carts = useSelector((state) => state.cart);
     //compute number of item
-    const cartItem = carts.reduce((total, product) => total + product.quantity, 0)
+    const cartItem = carts.reduce((total, product) => total + product.quantity, 0);
+
+    const dispatch = useDispatch();
+    const handlePageChange = (type) =>{
+        dispatch({type});
+    }
     return (
         <div className="navbar bg-base-100">
             <div className="flex-1">
@@ -15,7 +20,7 @@ const NavBar = () => {
             </div>
             <div className="flex-none space-x-4">
                 <div className="dropdown dropdown-end font-semibold">
-                    <button>Home</button>
+                    <button onClick={() => handlePageChange("HOME")}>Home</button>
                 </div>
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0}
